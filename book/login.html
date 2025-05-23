@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Online Bookstore</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./angular-1.8.2/angular.js"></script>
+    <script src="auth.js"></script>
+</head>
+<body ng-controller="AuthController">
+    <h1>🔐 Login to Bookstore</h1>
+    <div class="login-box">
+        <label>Username:</label>
+        <input type="text" ng-model="username" placeholder="Enter username" required>
+        <label>Password:</label>
+        <input type="password" ng-model="password" placeholder="Enter password" required>
+        <button ng-click="login()">Login</button>
+        <p style="color: red;">{{ errorMessage }}</p>
+    </div>
+</body>
+</html>

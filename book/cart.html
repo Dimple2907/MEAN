@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <script src="./angular-1.8.2/angular.js"></script>
+    <script src="cart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="CartController">
+    <h1>🛒 Cart Details</h1>
+
+    <a href="book.html"><button>🔙 Back to Bookstore</button></a>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in cart">
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>₹{{ item.price }}</td>
+                <td><input type="number" ng-model="item.quantity" min="1" ng-change="updateCart()" /></td>
+                <td>₹{{ item.price * item.quantity }}</td>
+                <td><button ng-click="removeItem(item)">Remove</button></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" style="text-align: right"><strong>Grand Total</strong></td>
+                <td colspan="2">₹{{ getTotal() }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

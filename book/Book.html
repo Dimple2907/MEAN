@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Bookstore</title>
+    <script src="./angular-1.8.2/angular.js"></script>
+    <script src="book.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="BookListController">
+    <h1>📚 Online Bookstore</h1>
+    <div style="text-align: right;">
+        <button ng-click="logout()">🚪 Logout</button>
+    </div>
+    
+
+    <div class="filter-section">
+        <div>
+            <label><strong>Filter by Category:</strong></label>
+            <select ng-model="selectedCategory" ng-change="filterBooks()">
+                <option value="">All</option>
+                <option ng-repeat="category in categories" value="{{ category }}">{{ category }}</option>
+            </select>
+        </div>
+        <div>
+            <label><strong>Search Books:</strong></label>
+            <input type="text" ng-model="searchQuery" ng-change="searchBooks()" placeholder="Search by title or category" />
+        </div>
+        <div>
+            <a href="cart.html">
+                <button>🛒 View Cart ({{ getCartCount() }})</button>
+            </a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="book in filteredBooks.slice(begin, begin + 2)">
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.category }}</td>
+                <td><img ng-src="{{ book.image }}" /></td>
+                <td>
+                    <button ng-click="viewDetails(book)" ng-if="selectedBook !== book">View Details</button>
+                    <div ng-if="selectedBook === book">
+                        <p><strong>Description:</strong> {{ book.description }}</p>
+                        <p><strong>Price:</strong> ₹{{ book.price }}</p>
+                        <label>Quantity:
+                            <input type="number" ng-model="book.quantity" min="1" />
+                        </label>
+                        <p><strong>Total:</strong> ₹{{ book.price * book.quantity }}</p>
+                        <button ng-click="addToCart(book)">Add to Cart</button>
+                        <button ng-click="closeDetails()">Close</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button ng-click="prevPage()" ng-disabled="begin === 0">Previous</button>
+        <button ng-click="nextPage()" ng-disabled="begin >= filteredBooks.length - 2">Next</button>
+    </div>
+</body>
+</html>
